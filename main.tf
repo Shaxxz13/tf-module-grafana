@@ -8,6 +8,6 @@ resource "helm_release" "grafana" {
 
 
   values = [
-    "${file("/home/idadmin/ME/planNapply/NX-GCP | Modules/Modules/grafana/values.yaml")}"
+    "${file("values.yaml")}"
   ]
 }
