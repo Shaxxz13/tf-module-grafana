@@ -8,6 +8,6 @@ resource "helm_release" "grafana" {
 
 
   values = [
-    "${file("values.yaml")}"
+    "${file("./values.yaml")}"
   ]
 }
