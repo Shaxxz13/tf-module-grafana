@@ -8,6 +8,6 @@ resource "helm_release" "grafana" {
 
 
   values = [
-    "${file("tf-module-grafana/values.yaml")}"
+    "${file("{path.module}/values.yaml")}"
   ]
 }
