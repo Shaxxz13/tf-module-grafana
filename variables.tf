@@ -10,16 +10,16 @@ variable "diskSize" {
 
 variable "access_key" {
   type = string
-  default = "AKIAXGL7F2KICDP3UXWJ"
+  default = ""
 }
 
 variable "secret_key" {
-  default = "Yqpz/cEWrZ9xUcrWl6E507pKLn/qpvSP2tKs+tSd"
+  default = ""
 }
 
 variable "region" {
   type = string
-  default = "us-west-2"
+  default = "us-east-2"
 }
 
 variable "eks_cluster_name" {
