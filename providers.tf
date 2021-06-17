@@ -1,3 +1,12 @@
+provider "aws" {
+      region     =  var.region
+      access_key = var.access_key
+      secret_key = var.secret_key
+}
+
+
+
+
 data "aws_eks_cluster" "main" {
   name = var.eks_cluster_name
 }
@@ -16,8 +25,3 @@ provider "helm" {
   }
 }
 
-# provider "helm" {
-#   kubernetes {
-#     config_path = "~/.kube/config"
-#   }
-# }
