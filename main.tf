@@ -13,9 +13,9 @@ resource "helm_release" "grafana" {
   atomic     = true
   create_namespace = true
   namespace  = var.namespace
-  repository = "https://grafana.github.io/helm-charts"
   timeout    = "600"
-  version    = "6.13.0"
+  repository = var.repository
+  version    = var.chart_version
  
   values = [
     file("${path.module}/values.yaml")
@@ -34,6 +34,16 @@ resource "helm_release" "grafana" {
   set {
     name  = "persistence.size"
     value = var.diskSize
+  }
+
+  set {
+    name  = "ingress.enabled"
+    value = var.ingress_enabled
+  }
+
+  set {
+    name  = "ingress.hosts"
+    value = var.hosts
   }
 
   depends_on = [

@@ -19,10 +19,32 @@ variable "secret_key" {
 
 variable "region" {
   type = string
-  default = "us-east-2"
+  default = "us-west-2"
 }
 
 variable "eks_cluster_name" {
   type = string
-  default = "barebone-dev"
+  default = "barebone-test-test"
 }
+
+variable "repository" {
+  type = string
+  default = ""
+}
+
+variable "chart_version" {
+  type = string
+  default = ""
+}
+
+variable "ingress_enabled" {
+  type = string
+  default = ""
+}
+
+variable "hosts" {
+  type = string
+  default = ""
+}
+
+
