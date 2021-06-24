@@ -18,7 +18,23 @@ resource "helm_release" "grafana" {
   version    = var.chart_version
  
   values = [
-    file("${path.module}/values.yaml")
+    file("${path.module}/values.yaml"),
+<<-EOF
+ingress:
+  enabled: ${var.ingress_enabled}
+  annotations:
+    kubernetes.io/ingress.class: "${var.ingress_class}"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    ingress.kubernetes.io/rewrite-target: "/"
+    ingress.kubernetes.io/ssl-redirect: "false"
+  hosts:
+    - ${var.hosts}
+  tls: 
+    - secretName: ${var.hosts}-tls
+      hosts:
+      - ${var.hosts}
+
+EOF
   ]
 
   set {
@@ -36,15 +52,6 @@ resource "helm_release" "grafana" {
     value = var.diskSize
   }
 
-  set {
-    name  = "ingress.enabled"
-    value = var.ingress_enabled
-  }
-
-  set {
-    name  = "ingress.hosts"
-    value = var.hosts
-  }
 
   depends_on = [
     random_string.default

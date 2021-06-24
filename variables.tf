@@ -37,14 +37,11 @@ variable "chart_version" {
   default = ""
 }
 
-variable "ingress_enabled" {
+variable "ingress_class" {
   type = string
   default = ""
 }
 
-variable "hosts" {
-  type = string
-  default = ""
-}
+
 
 

@@ -1,8 +1,9 @@
 access_key = ""
-secret_key = ""
+secret_key =  ""
 eks_cluster_name =  "barebone-test-test"
 region = "us-west-2"
-repository = "s3://helm-s5-test/helm-charts"
-chart_version = "0.1.1"
+repository = "https://grafana.github.io/helm-charts"
+chart_version = "6.13.5"
 ingress_enabled = true
 hosts = "url"
+ingress_class = "nginx"
