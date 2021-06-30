@@ -38,8 +38,8 @@ EOF
 ,
 <<-EOF
 extraEmptyDirMounts: 
-  - name: default
-    mountPath: /var/lib/grafana/dashboards/
+  - name: git-dashboards
+    mountPath: /var/git/
 
 EOF
 ,
@@ -48,17 +48,17 @@ EOF
       - name: git-sync
         image: k8s.gcr.io/git-sync:v3.1.6
         volumeMounts:
-        - name: default
-          mountPath: /var/lib/grafana/dashboards/
+        - name: git-dashboards
+          mountPath: /var/git/
         # - name: git-secret
         #   mountPath: /etc/git-secret
         #   readOnly: true
         securityContext:
-          runAsUser: 65533 # git-sync user
+          runAsUser: 65533 #perm
         args:
         - --repo=https://github.com/nxterraform/grafana_dashboards.git
-        - --root=/var/lib/grafana/dashboards/
-        - --dest=default
+        - --root=/var/git/
+        - --dest=git-dashboards
         - --wait=30
         - --branch=${var.branch}
         - --username=${var.username}
@@ -73,13 +73,12 @@ dashboardProviders:
    providers:
    - name: 'default'
      orgId: 1
-     folder: ''
+     folder: 'core'
      type: file
      disableDeletion: false
      editable: true
      options:
-       path: /var/lib/grafana/dashboards/default
-      #  path: /var/git/git-dashboards/dashboards  
+       path: /var/git/git-dashboards/core
 EOF
 ]
 

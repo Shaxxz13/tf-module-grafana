@@ -88,8 +88,8 @@ testFramework:
   securityContext: {}
 
 securityContext:
-  runAsUser: 472
-  runAsGroup: 472
+  runAsUser: 65533
+  runAsGroup: 65533
   fsGroup: 472
 
 containerSecurityContext:
@@ -496,24 +496,24 @@ dashboardProviders:
 ##
 ## dashboards per provider, use provider name as key.
 ##
-dashboards: 
-  default:
-  #   some-dashboard:
-  #     json: |
-  #       $RAW_JSON
+dashboards: {}
+  # default:
+    # some-dashboard:
+    #   json: |
+    #     $RAW_JSON
     # custom-dashboard:
     #   file: "/Users/ashish/workstation/terraform/S5/s5-tf/tf-module-grafana/dashboards/*"
     # prometheus-stats:
     #   gnetId: 2
     #   revision: 2
     #   datasource: Prometheus
-  #   local-dashboard:
-  #     url: https://example.com/repository/test.json
-  #     token: ''
-  #   local-dashboard-base64:
-  #     url: https://example.com/repository/test-b64.json
-  #     token: ''
-  #     b64content: true
+    # local-dashboard:
+    #   url: https://example.com/repository/test.json
+    #   token: ''
+    # local-dashboard-base64:
+    #   url: https://example.com/repository/test-b64.json
+    #   token: ''
+    #   b64content: true
 
 ## Reference to external ConfigMap per provider. Use provider name as key and ConfigMap name as value.
 ## A provider dashboards must be defined either by external ConfigMaps or in values.yaml, not in both.
