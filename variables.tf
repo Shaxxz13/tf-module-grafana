@@ -42,6 +42,36 @@ variable "ingress_class" {
   default = ""
 }
 
+variable "ingress_enabled" {
+  type = string
+  default = ""
+}
+
+variable "pvc" {
+  type = string
+  default = false
+}
+
+variable "hosts" {
+  type = string
+  default = false
+}
+
+variable "branch" {
+  type = string
+  default = "develop"
+}
+
+variable "username" {
+  type = string
+  default = ""
+}
+
+variable "password" {
+  type = string
+  default = "develop"
+}
+
 
 
 

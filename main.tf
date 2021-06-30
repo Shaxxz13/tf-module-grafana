@@ -13,7 +13,7 @@ resource "helm_release" "grafana" {
   atomic     = true
   create_namespace = true
   namespace  = var.namespace
-  timeout    = "600"
+  timeout    = "120"
   repository = var.repository
   version    = var.chart_version
  
@@ -35,7 +35,53 @@ ingress:
       - ${var.hosts}
 
 EOF
-  ]
+,
+<<-EOF
+extraEmptyDirMounts: 
+  - name: default
+    mountPath: /var/lib/grafana/dashboards/
+
+EOF
+,
+    <<-EOF
+    extraContainers: |
+      - name: git-sync
+        image: k8s.gcr.io/git-sync:v3.1.6
+        volumeMounts:
+        - name: default
+          mountPath: /var/lib/grafana/dashboards/
+        # - name: git-secret
+        #   mountPath: /etc/git-secret
+        #   readOnly: true
+        securityContext:
+          runAsUser: 65533 # git-sync user
+        args:
+        - --repo=https://github.com/nxterraform/grafana_dashboards.git
+        - --root=/var/lib/grafana/dashboards/
+        - --dest=default
+        - --wait=30
+        - --branch=${var.branch}
+        - --username=${var.username}
+        - --password=${var.password}
+EOF
+,
+
+<<-EOF
+dashboardProviders: 
+ dashboardproviders.yaml:
+   apiVersion: 1
+   providers:
+   - name: 'default'
+     orgId: 1
+     folder: ''
+     type: file
+     disableDeletion: false
+     editable: true
+     options:
+       path: /var/lib/grafana/dashboards/default
+      #  path: /var/git/git-dashboards/dashboards  
+EOF
+]
 
   set {
     name  = "adminPassword"
@@ -50,6 +96,11 @@ EOF
   set {
     name  = "persistence.size"
     value = var.diskSize
+  }
+
+  set {
+    name  = "persistence.enabled"
+    value = var.pvc
   }
 
 
